@@ -1,0 +1,5 @@
+serve.log
+serve.err
+vercel-preview.tgz
+tmp-test/
+tmp-test-file.txt
