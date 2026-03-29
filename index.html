@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fridge Flow AI</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Fridge-to-Table AI Studio</p>
+          <h1>Turn what is left in your fridge into the best next meal.</h1>
+          <p class="hero-body">
+            Upload a fridge photo, estimate what is inside, assign conservative use-by dates,
+            and surface recipes that fit the current time of day and recent food trends.
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-time">
+            <span class="meta-label">Live recommendation mode</span>
+            <strong id="heroClock">--:--</strong>
+            <p id="mealContextCopy">Checking the current meal window.</p>
+          </div>
+          <div class="meta-strip">
+            <span>Photo-based ingredient scan</span>
+            <span>Conservative expiry estimates</span>
+            <span>Trend-weighted recipe ranking</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="control-slab fade-up">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Input Station</p>
+              <h2>Build the fridge first</h2>
+            </div>
+            <div class="section-actions">
+              <button id="loadSampleButton" class="ghost-button" type="button">Load Sample</button>
+              <button id="clearIngredientsButton" class="ghost-button" type="button">Clear All</button>
+            </div>
+          </div>
+
+          <section class="scan-stage">
+            <div class="scan-head">
+              <div>
+                <p class="section-kicker">AI Vision Demo</p>
+                <h3>Upload a fridge photo</h3>
+              </div>
+              <button id="analyzePhotoButton" class="primary-button" type="button" disabled>
+                Analyze Photo
+              </button>
+            </div>
+            <label class="upload-frame" for="photoInput">
+              <input id="photoInput" type="file" accept="image/*" />
+              <img id="photoPreview" alt="Uploaded fridge preview" hidden />
+              <div id="photoPlaceholder" class="upload-placeholder">
+                <strong>Add a fridge image</strong>
+                <span>The local demo engine uses filename clues and dominant colors to estimate ingredients.</span>
+              </div>
+            </label>
+            <p id="analysisStatus" class="scan-status">No photo selected yet.</p>
+            <div id="analysisResults" class="analysis-results"></div>
+            <div id="analysisAction" class="analysis-action"></div>
+          </section>
+
+          <section class="manual-stage">
+            <div class="section-head compact">
+              <div>
+                <p class="section-kicker">Manual Add</p>
+                <h3>Register ingredients directly</h3>
+              </div>
+            </div>
+            <form id="ingredientForm" class="ingredient-form">
+              <label>
+                <span>Ingredient</span>
+                <input
+                  id="ingredientName"
+                  name="ingredientName"
+                  list="ingredientSuggestions"
+                  placeholder="Example: Egg, Tofu, Spinach"
+                  autocomplete="off"
+                  required
+                />
+              </label>
+              <label>
+                <span>Quantity</span>
+                <input id="ingredientQuantity" name="ingredientQuantity" placeholder="Example: 2 ea, 1 pack" />
+              </label>
+              <label>
+                <span>Verified expiry date</span>
+                <input id="ingredientExpiry" name="ingredientExpiry" type="date" />
+              </label>
+              <button class="primary-button full-width" type="submit">Add Ingredient</button>
+            </form>
+
+            <div class="quick-pills-wrap">
+              <p class="mini-label">Quick Add</p>
+              <div id="quickAddPills" class="quick-pills"></div>
+            </div>
+            <datalist id="ingredientSuggestions"></datalist>
+          </section>
+
+          <section class="inventory-stage">
+            <div class="section-head compact">
+              <div>
+                <p class="section-kicker">Current Fridge</p>
+                <h3>Ingredient list</h3>
+              </div>
+              <p id="inventorySummary" class="summary-copy">Loading inventory...</p>
+            </div>
+            <div class="policy-note">
+              AI expiry estimates are intentionally conservative. You can adjust each date after checking the actual package.
+            </div>
+            <div id="inventoryList" class="inventory-list"></div>
+          </section>
+        </section>
+
+        <section class="output-stage fade-up">
+          <div class="insight-band">
+            <div>
+              <p class="section-kicker">Recommendation Engine</p>
+              <h2>What should you cook right now?</h2>
+            </div>
+            <div id="insightTags" class="insight-tags"></div>
+          </div>
+
+          <section class="assistant-brief">
+            <div id="assistantNarrative" class="assistant-narrative"></div>
+            <div id="discardZone" class="discard-zone"></div>
+          </section>
+
+          <section class="recommendation-stage">
+            <div class="pane-head">
+              <h3>Top menu suggestions</h3>
+              <p id="recommendationSummary">Calculating recommendations...</p>
+            </div>
+            <div id="recommendationList" class="recommendation-list"></div>
+          </section>
+
+          <section class="recipe-stage">
+            <div class="pane-head">
+              <h3>Recipe detail</h3>
+              <p>See why the engine picked the dish and how to cook it.</p>
+            </div>
+            <article id="recipeDetail" class="recipe-detail"></article>
+          </section>
+        </section>
+      </main>
+
+      <footer class="footnote">
+        <p>
+          This MVP runs in the browser only. The photo scan is a local demo pipeline designed so a real vision API can replace it later.
+        </p>
+      </footer>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
